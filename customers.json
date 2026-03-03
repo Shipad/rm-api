@@ -1,8 +1,5 @@
 [
-  {
-    "id": 1,
-    "companyName": "RGT Company",
-    "token": "4dfffa80c82e95c2b39bd969d9d52fa804ff0d76",
-    "createdAt": "2026-03-03T05:49:07.024Z"
-  }
-]
+
+    "message": "Customer created successfully",
+    "token": "d528da905ccb83e17ca16b782ad411529bfd0d22"
+}]

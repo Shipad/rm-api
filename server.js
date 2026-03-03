@@ -13,7 +13,9 @@ app.use(express.json());
 ================================= */
 
 const PORT = process.env.PORT || 3000;
-const RM_BEARER_TOKEN = "061e8b94-f28c-4368-bcb9-27a061dd7591";
+
+// Royal Mail v1 - TOKEN CỐ ĐỊNH
+const RM_BEARER_TOKEN = process.env.RM_BEARER_TOKEN;
 const RM_API_URL = "https://api.parcel.royalmail.com/api/v1/orders";
 
 const CUSTOMER_FILE = "customers.json";
@@ -34,7 +36,7 @@ function saveCustomers(data) {
 }
 
 /* ===============================
-   CREATE CUSTOMER (TẠO TOKEN CỐ ĐỊNH)
+   CREATE CUSTOMER (TOKEN CỐ ĐỊNH CHO KHÁCH)
 ================================= */
 
 app.post("/api/create-customer", (req, res) => {
@@ -45,8 +47,6 @@ app.post("/api/create-customer", (req, res) => {
   }
 
   const customers = loadCustomers();
-
-  // Tạo token ngẫu nhiên 40 ký tự
   const token = crypto.randomBytes(20).toString("hex");
 
   const newCustomer = {
@@ -66,7 +66,7 @@ app.post("/api/create-customer", (req, res) => {
 });
 
 /* ===============================
-   VERIFY TOKEN
+   VERIFY CUSTOMER TOKEN
 ================================= */
 
 function verifyCustomerToken(req, res, next) {
@@ -90,7 +90,7 @@ function verifyCustomerToken(req, res, next) {
 }
 
 /* ===============================
-   CREATE LABEL
+   CREATE LABEL (ROYAL MAIL V1)
 ================================= */
 
 app.post("/api/create-label", verifyCustomerToken, async (req, res) => {
@@ -109,7 +109,7 @@ app.post("/api/create-label", verifyCustomerToken, async (req, res) => {
     );
 
     res.json({
-      message: "Label created",
+      message: "Label created successfully",
       customer: req.customer.companyName,
       data: response.data
     });
@@ -118,7 +118,7 @@ app.post("/api/create-label", verifyCustomerToken, async (req, res) => {
 
     console.log("RM ERROR:", error.response?.data || error.message);
 
-    res.status(500).json({
+    res.status(error.response?.status || 500).json({
       message: "Create label failed",
       error: error.response?.data || error.message
     });
@@ -132,6 +132,14 @@ app.post("/api/create-label", verifyCustomerToken, async (req, res) => {
 app.get("/api/customers", (req, res) => {
   const customers = loadCustomers();
   res.json(customers);
+});
+
+/* ===============================
+   HEALTH CHECK
+================================= */
+
+app.get("/", (req, res) => {
+  res.send("RM API v1 running...");
 });
 
 /* ===============================
