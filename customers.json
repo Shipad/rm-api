@@ -1,2 +1,8 @@
-"message": "Token generated",
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJjdXN0b21lclJHVCIsImlhdCI6MTc3MjUxMjQ5MywiZXhwIjoxODA0MDQ4NDkzfQ.OvgwcVFsW7vrUkphWFj7OUOUw6Xd7ymoDp2smf_qZp0"
+[
+  {
+    "id": 1,
+    "companyName": "RGT Company",
+    "token": "4dfffa80c82e95c2b39bd969d9d52fa804ff0d76",
+    "createdAt": "2026-03-03T05:49:07.024Z"
+  }
+]
